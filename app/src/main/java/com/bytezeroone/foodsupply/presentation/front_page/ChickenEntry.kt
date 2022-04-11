@@ -26,7 +26,6 @@ fun ChickenEntry(
     modifier: Modifier = Modifier
 ) {
     Box(
-        //contentAlignment = Alignment.Start,
         modifier = modifier
             .fillMaxWidth()
             .height(192.dp)
