@@ -18,11 +18,11 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.bytezeroone.foodsupply.data.remote.responses.Meal
+import com.bytezeroone.foodsupply.domain.model.FoodInfo
 
 @Composable
 fun ChickenEntry(
-    entry: Meal,
+    entry: FoodInfo,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -37,7 +37,7 @@ fun ChickenEntry(
         ) {
             val painter = rememberAsyncImagePainter(
                 ImageRequest.Builder(LocalContext.current)
-                    .data(entry.strMealThumb)
+                    .data(entry.imageUrl)
                     .crossfade(true)
                     .build()
             )
@@ -56,15 +56,13 @@ fun ChickenEntry(
                 contentDescription = "entry image",
                 modifier = Modifier
                     .size(192.dp)
-                    //.align(Alignment.CenterStart)
                     .padding(8.dp),
             )
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
                 Text(
-                    // modifier = Modifier.weight(0.2f),
-                    text = entry.idMeal,
+                    text = entry.id,
                     fontSize = 16.sp,
                     fontWeight = Bold
 
@@ -72,7 +70,7 @@ fun ChickenEntry(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     modifier = Modifier.weight(0.6f),
-                    text = entry.strMeal,
+                    text = entry.name,
                     fontSize = 12.sp
                 )
                 Button(

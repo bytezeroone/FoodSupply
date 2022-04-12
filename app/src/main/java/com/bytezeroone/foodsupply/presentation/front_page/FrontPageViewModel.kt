@@ -39,6 +39,8 @@ class FrontPageViewModel @Inject constructor(
     var isLoading = mutableStateOf(false)
     var endReached = mutableStateOf(false)
 
+    var chickenList2 = mutableStateOf<List<FoodInfo>>(listOf())
+
     init {
         loadChicken()
         loadCategories()
@@ -50,9 +52,11 @@ class FrontPageViewModel @Inject constructor(
             val result = repository.getChickenInfo()
             when (result) {
                 is Resource.Success -> {
-                    //endReached.value >= result.data!!
-                    val chickenEntries = result.data!!.meals
-                    chickenList = chickenEntries
+                    val foodEntries = result.data!!.meals.mapIndexed { index, entry ->
+                        FoodInfo(entry.idMeal, entry.strMeal, entry.strMealThumb)
+
+                    }
+                    chickenList2.value += foodEntries
                 }
                 is Resource.Error -> {
                     loadError.value = result.message!!

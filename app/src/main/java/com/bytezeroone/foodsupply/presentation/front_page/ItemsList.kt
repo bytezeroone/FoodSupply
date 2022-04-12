@@ -7,14 +7,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.bytezeroone.foodsupply.data.remote.responses.Category
-import com.bytezeroone.foodsupply.data.remote.responses.ChickenFood
-import com.bytezeroone.foodsupply.util.Resource
+
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -22,6 +20,10 @@ fun ItemList(
     viewModel: FrontPageViewModel = hiltViewModel()
 ) {
     val chickenState = viewModel.chickenList
+    val chickenState2 by remember {
+        viewModel.chickenList2
+    }
+
     val categoriesState = viewModel.categoriesList
 
     /*val categorySelected = produceState<Resource<ChickenFood>>(initialValue = Resource.Loading()) {
@@ -41,8 +43,8 @@ fun ItemList(
         stickyHeader {
             FoodTypeRow()
         }
-        items(chickenState.size) { i ->
-            val item = chickenState[i]
+        items(chickenState2.size) { i ->
+            val item = chickenState2[i]
             viewModel.loadChicken()
             ChickenEntry(entry = item)
             Spacer(modifier = Modifier.height(8.dp))
