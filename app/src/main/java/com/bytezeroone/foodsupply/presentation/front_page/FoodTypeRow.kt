@@ -8,18 +8,22 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bytezeroone.foodsupply.data.remote.responses.Category
+import com.bytezeroone.foodsupply.domain.model.CategoryInfo
 
 @Composable
 fun FoodTypeRow(
 ) {
     val viewModel: FrontPageViewModel = hiltViewModel()
-    val categoriesState = viewModel.categoriesList
+    val categoriesState by remember {
+        viewModel.categoriesList
+    }
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -45,7 +49,7 @@ fun FoodTypeRow(
 fun TypeButton(
     onCLick: () -> Unit,
     textColor: Color,
-    categoryEntry: Category
+    categoryEntry: CategoryInfo
 ) {
         Button(
             modifier = Modifier

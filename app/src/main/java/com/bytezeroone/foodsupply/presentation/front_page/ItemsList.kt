@@ -19,9 +19,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun ItemList(
     viewModel: FrontPageViewModel = hiltViewModel()
 ) {
-    val chickenState = viewModel.chickenList
-    val chickenState2 by remember {
-        viewModel.chickenList2
+    val chickenState by remember {
+        viewModel.chickenList
     }
 
     val categoriesState = viewModel.categoriesList
@@ -43,8 +42,8 @@ fun ItemList(
         stickyHeader {
             FoodTypeRow()
         }
-        items(chickenState2.size) { i ->
-            val item = chickenState2[i]
+        items(chickenState.size) { i ->
+            val item = chickenState[i]
             viewModel.loadChicken()
             ChickenEntry(entry = item)
             Spacer(modifier = Modifier.height(8.dp))

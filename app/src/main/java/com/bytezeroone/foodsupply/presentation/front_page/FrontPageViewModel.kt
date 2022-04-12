@@ -12,6 +12,7 @@ import com.bytezeroone.foodsupply.data.remote.responses.Category
 import com.bytezeroone.foodsupply.data.remote.responses.ChickenFood
 import com.bytezeroone.foodsupply.data.remote.responses.FoodCategory
 import com.bytezeroone.foodsupply.data.remote.responses.Meal
+import com.bytezeroone.foodsupply.domain.model.CategoryInfo
 import com.bytezeroone.foodsupply.domain.model.FoodInfo
 import com.bytezeroone.foodsupply.domain.repository.FoodRepository
 import com.bytezeroone.foodsupply.util.Resource
@@ -23,23 +24,14 @@ import javax.inject.Inject
 class FrontPageViewModel @Inject constructor(
     private val repository: FoodRepository
 ): ViewModel() {
-    /*var textColor = mutableStateOf(Color.LightGray)
-
-    fun textColorChange() {
-        when (textColor.value) {
-            Color.Red -> textColor.value = Color.LightGray
-            Color.LightGray -> textColor.value = Color.Red
-        }
-    }*/
 
     private var curPage = 0
 
-    var chickenList: List<Meal> by mutableStateOf(listOf())
     var loadError = mutableStateOf("")
     var isLoading = mutableStateOf(false)
     var endReached = mutableStateOf(false)
 
-    var chickenList2 = mutableStateOf<List<FoodInfo>>(listOf())
+    var chickenList = mutableStateOf<List<FoodInfo>>(listOf())
 
     init {
         loadChicken()
@@ -56,7 +48,7 @@ class FrontPageViewModel @Inject constructor(
                         FoodInfo(entry.idMeal, entry.strMeal, entry.strMealThumb)
 
                     }
-                    chickenList2.value += foodEntries
+                    chickenList.value += foodEntries
                 }
                 is Resource.Error -> {
                     loadError.value = result.message!!
@@ -67,15 +59,18 @@ class FrontPageViewModel @Inject constructor(
         }
     }
 
-    var categoriesList: List<Category> by mutableStateOf(listOf())
+    var categoriesList = mutableStateOf<List<CategoryInfo>>(listOf())
+
     fun loadCategories() {
         viewModelScope.launch {
             isLoading.value = true
             val result = repository.getCategoriesInfos()
             when (result) {
                 is Resource.Success -> {
-                    val chickenEntries = result.data!!.categories
-                    categoriesList = chickenEntries
+                    val categoryEntry = result.data!!.categories.mapIndexed { index, category ->
+                        CategoryInfo(category.idCategory, category.strCategory, category.strCategoryDescription, category.strCategoryThumb)
+                    }
+                    categoriesList.value += categoryEntry
                 }
                 is Resource.Error -> {
                     loadError.value = result.message!!
