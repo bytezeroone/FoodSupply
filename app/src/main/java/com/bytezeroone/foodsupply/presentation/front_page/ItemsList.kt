@@ -23,9 +23,9 @@ fun ItemList(
         viewModel.chickenList
     }
 
-    val categoriesState = viewModel.categoriesList
+    /*val categoriesState = viewModel.categoriesList
 
-    /*val categorySelected = produceState<Resource<ChickenFood>>(initialValue = Resource.Loading()) {
+    val categorySelected = produceState<Resource<ChickenFood>>(initialValue = Resource.Loading()) {
         value = viewModel.getChickenInfosByName(name)
     }.value*/
 

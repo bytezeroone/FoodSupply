@@ -1,7 +1,5 @@
 package com.bytezeroone.foodsupply.domain.model
 
-import com.google.gson.annotations.SerializedName
-
 data class FoodInfo(
     val name: String,
     val id: String,

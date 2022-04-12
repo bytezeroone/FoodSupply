@@ -1,17 +1,9 @@
 package com.bytezeroone.foodsupply.presentation.front_page
 
-import androidx.annotation.DrawableRes
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bytezeroone.foodsupply.R
-import com.bytezeroone.foodsupply.data.remote.responses.Category
 import com.bytezeroone.foodsupply.data.remote.responses.ChickenFood
-import com.bytezeroone.foodsupply.data.remote.responses.FoodCategory
-import com.bytezeroone.foodsupply.data.remote.responses.Meal
 import com.bytezeroone.foodsupply.domain.model.CategoryInfo
 import com.bytezeroone.foodsupply.domain.model.FoodInfo
 import com.bytezeroone.foodsupply.domain.repository.FoodRepository
@@ -25,11 +17,9 @@ class FrontPageViewModel @Inject constructor(
     private val repository: FoodRepository
 ): ViewModel() {
 
-    private var curPage = 0
-
+    //TODO error loading
     var loadError = mutableStateOf("")
     var isLoading = mutableStateOf(false)
-    var endReached = mutableStateOf(false)
 
     var chickenList = mutableStateOf<List<FoodInfo>>(listOf())
 
