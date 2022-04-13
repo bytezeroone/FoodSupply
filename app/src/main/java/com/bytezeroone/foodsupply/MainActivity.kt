@@ -12,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.bytezeroone.foodsupply.data.remote.responses.Category
+import com.bytezeroone.foodsupply.navigation.nav_graph.SetupNavGraph
 import com.bytezeroone.foodsupply.presentation.front_page.FrontPageScreen
 import com.bytezeroone.foodsupply.presentation.front_page.FrontPageViewModel
 import com.bytezeroone.foodsupply.ui.theme.FoodSupplyTheme
@@ -30,7 +32,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    FrontPageScreen()
+                    val navController = rememberNavController()
+                    SetupNavGraph(navController = navController)
+                    //FrontPageScreen(navController)
                 }
             }
         }
