@@ -22,6 +22,8 @@ fun ItemList(
     val chickenState by remember {
         viewModel.chickenList
     }
+
+    val endReached by remember { viewModel.endReached }
     /*val categoriesState = viewModel.categoriesList
 
     val categorySelected = produceState<Resource<ChickenFood>>(initialValue = Resource.Loading()) {
@@ -46,7 +48,9 @@ fun ItemList(
         }
         items(chickenState.size) { i ->
             val item = chickenState[i]
-            viewModel.loadChicken()
+            if (endReached) {
+                viewModel.loadChicken()
+            }
             ChickenEntry(entry = item)
             Spacer(modifier = Modifier.height(8.dp))
         }

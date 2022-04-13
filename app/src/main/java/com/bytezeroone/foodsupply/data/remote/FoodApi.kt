@@ -11,7 +11,9 @@ interface FoodApi {
 
 
     @GET("1/filter.php?c=Chicken")
-    suspend fun getChickenFoodInfoList(): ChickenFood
+    suspend fun getChickenFoodInfoList(
+        @Query("page") page: Int
+    ): ChickenFood
 
     @GET("1/filter.php?c={name}")
     suspend fun getFoodInfoListByName(

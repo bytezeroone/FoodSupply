@@ -12,9 +12,9 @@ class FoodRepository @Inject constructor(
     private val api: FoodApi
 ) {
 
-    suspend fun getChickenInfo(): Resource<ChickenFood> {
+    suspend fun getChickenInfo(page: Int): Resource<ChickenFood> {
         val response = try {
-            api.getChickenFoodInfoList()
+            api.getChickenFoodInfoList(page)
         } catch (e: Exception) {
             return Resource.Error("Error")
         }

@@ -7,8 +7,10 @@ import com.bytezeroone.foodsupply.data.remote.responses.ChickenFood
 import com.bytezeroone.foodsupply.domain.model.CategoryInfo
 import com.bytezeroone.foodsupply.domain.model.FoodInfo
 import com.bytezeroone.foodsupply.domain.repository.FoodRepository
+import com.bytezeroone.foodsupply.util.PAGE_SIZE
 import com.bytezeroone.foodsupply.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,6 +23,9 @@ class FrontPageViewModel @Inject constructor(
     var loadError = mutableStateOf("")
     var isLoading = mutableStateOf(false)
 
+    private var curPage = 0
+
+    var endReached = mutableStateOf(false)
     var chickenList = mutableStateOf<List<FoodInfo>>(listOf())
 
     init {
@@ -31,13 +36,14 @@ class FrontPageViewModel @Inject constructor(
     fun loadChicken() {
         viewModelScope.launch {
             isLoading.value = true
-            val result = repository.getChickenInfo()
+            val result = repository.getChickenInfo(PAGE_SIZE)
             when (result) {
                 is Resource.Success -> {
+                    endReached.value = curPage * PAGE_SIZE >= 1
                     val foodEntries = result.data!!.meals.mapIndexed { index, entry ->
                         FoodInfo(entry.idMeal, entry.strMeal, entry.strMealThumb)
-
                     }
+                    curPage++
                     chickenList.value += foodEntries
                 }
                 is Resource.Error -> {
