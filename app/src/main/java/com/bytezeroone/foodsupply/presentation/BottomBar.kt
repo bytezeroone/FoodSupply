@@ -5,9 +5,8 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.bytezeroone.foodsupply.navigation.BottomRoutes
@@ -16,7 +15,6 @@ import com.bytezeroone.foodsupply.navigation.BottomRoutes
 fun BottomBar(
     navController: NavController,
 ) {
-    var selectedColor = Color.Gray
     val screens = listOf(
         BottomRoutes.Home,
         BottomRoutes.Profile,
@@ -24,9 +22,11 @@ fun BottomBar(
     )
     BottomNavigation(
         backgroundColor = Color.LightGray,
-        contentColor = Color.Red
+        contentColor = Color.Gray
     ) {
         screens.forEach { screen ->
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
             BottomNavigationItem(
                 icon = {
                     Icon(
@@ -37,15 +37,20 @@ fun BottomBar(
                 label = {
                     Text(text = screen.label)
                 },
-                selectedContentColor = selectedColor,
-                unselectedContentColor = selectedColor,
+                selectedContentColor = Color.Red,
+                unselectedContentColor = Color.Gray,
                 alwaysShowLabel = true,
-                selected = false,
+                selected = currentRoute == screen.route,
                 onClick = {
                     navController.navigate(screen.route) {
-                        //aunchSingleTop = true
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+                        launchSingleTop = true
+                        restoreState = true
                     }
-                    selectedColor = Color.Red
                 }
             )
         }
