@@ -4,7 +4,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.bytezeroone.foodsupply.navigation.BottomRoutes
+import com.bytezeroone.foodsupply.presentation.cart_screen.CartScreen
 import com.bytezeroone.foodsupply.presentation.front_page.FrontPageScreen
+import com.bytezeroone.foodsupply.presentation.profile_screen.ProfileScreen
 
 
 fun NavGraphBuilder.bottomNavGraph(
@@ -15,10 +17,10 @@ fun NavGraphBuilder.bottomNavGraph(
     }
 
     composable(BottomRoutes.Profile.route) {
-
+        ProfileScreen(navController)
     }
 
     composable(BottomRoutes.Cart.route) {
-
+        CartScreen(navController)
     }
 }

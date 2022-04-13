@@ -5,15 +5,18 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.bytezeroone.foodsupply.navigation.BottomRoutes
 
 @Composable
 fun BottomBar(
     navController: NavController,
 ) {
+    var selectedColor = Color.Gray
     val screens = listOf(
         BottomRoutes.Home,
         BottomRoutes.Profile,
@@ -24,8 +27,6 @@ fun BottomBar(
         contentColor = Color.Red
     ) {
         screens.forEach { screen ->
-            //val navBackStackEntry by navController.currentBackStackEntryAsState()
-            //val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
             BottomNavigationItem(
                 icon = {
                     Icon(
@@ -36,15 +37,15 @@ fun BottomBar(
                 label = {
                     Text(text = screen.label)
                 },
-                selectedContentColor = Color.Red,
-                unselectedContentColor = Color.Gray,
+                selectedContentColor = selectedColor,
+                unselectedContentColor = selectedColor,
                 alwaysShowLabel = true,
                 selected = false,
                 onClick = {
-                    /*navController.navigate(screen.route) {
-                        //popUpToId = navController.graph.startDestinationId
-                        //launchSingleTop = true
-                    }*/
+                    navController.navigate(screen.route) {
+                        //aunchSingleTop = true
+                    }
+                    selectedColor = Color.Red
                 }
             )
         }
