@@ -34,7 +34,6 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     SetupNavGraph(navController = navController)
-                    //FrontPageScreen(navController)
                 }
             }
         }
