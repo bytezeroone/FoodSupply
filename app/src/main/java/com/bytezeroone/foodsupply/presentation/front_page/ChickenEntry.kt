@@ -25,6 +25,8 @@ fun ChickenEntry(
     entry: FoodInfo,
     modifier: Modifier = Modifier
 ) {
+    val randomPrice: Int = (0..100).random()
+    val formattedPrice = String.format("%d$",randomPrice)
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -81,7 +83,7 @@ fun ChickenEntry(
                     onClick = { /*TODO*/ },
                     colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
                 ) {
-                    Text(text = "price")
+                    Text(text = formattedPrice)
                 }
             }
         }
