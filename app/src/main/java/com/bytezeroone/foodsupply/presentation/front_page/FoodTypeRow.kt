@@ -40,7 +40,9 @@ fun FoodTypeRow(
             items(categoriesState.size) { i ->
                 val item = categoriesState[i]
                 TypeCategory(
-                    onCLick = { /*TODO*/ },
+                    onCLick = {
+
+                    },
                     categoryEntry = item
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -52,8 +54,12 @@ fun FoodTypeRow(
 @Composable
 fun TypeCategory(
     onCLick: () -> Unit,
-    categoryEntry: CategoryInfo
+    categoryEntry: CategoryInfo,
 ) {
+    /*val buttonColorState = remember {
+        mutableStateOf(true)
+    }*/
+
     val interaction = remember { MutableInteractionSource() }
     val isPressed by interaction.collectIsPressedAsState()
     val color = if (isPressed) Color.Red else Color.LightGray

@@ -22,7 +22,6 @@ fun ItemList(
     val chickenState by remember {
         viewModel.chickenList
     }
-
     /*val categoriesState = viewModel.categoriesList
 
     val categorySelected = produceState<Resource<ChickenFood>>(initialValue = Resource.Loading()) {
@@ -36,6 +35,9 @@ fun ItemList(
             .fillMaxSize()
             .padding(bottom = 8.dp)
     ) {
+        item {
+            TopBar()
+        }
         item {
             BannerRow()
         }

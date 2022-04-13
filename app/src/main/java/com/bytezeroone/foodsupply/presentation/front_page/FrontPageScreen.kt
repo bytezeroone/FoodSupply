@@ -12,7 +12,7 @@ fun FrontPageScreen(
     navController: NavController
 ) {
     Scaffold(
-        topBar = { TopBar() },
+        //topBar = { TopBar() },
         bottomBar = { BottomBar(navController) }
     ) {
         ItemList()
