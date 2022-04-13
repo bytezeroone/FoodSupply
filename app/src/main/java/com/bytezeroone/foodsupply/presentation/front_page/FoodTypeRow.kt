@@ -1,5 +1,7 @@
 package com.bytezeroone.foodsupply.presentation.front_page
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -7,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -24,6 +27,7 @@ fun FoodTypeRow(
     val categoriesState by remember {
         viewModel.categoriesList
     }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colors.background
@@ -34,9 +38,8 @@ fun FoodTypeRow(
         ) {
             items(categoriesState.size) { i ->
                 val item = categoriesState[i]
-                TypeButton(
+                TypeCategory(
                     onCLick = { /*TODO*/ },
-                    textColor = Color.LightGray,
                     categoryEntry = item
                 )
                 Spacer(modifier = Modifier.width(8.dp))
@@ -46,20 +49,23 @@ fun FoodTypeRow(
 }
 
 @Composable
-fun TypeButton(
+fun TypeCategory(
     onCLick: () -> Unit,
-    textColor: Color,
     categoryEntry: CategoryInfo
 ) {
+    val interaction = remember { MutableInteractionSource() }
+    val isPressed by interaction.collectIsPressedAsState()
+    val color = if (isPressed) Color.Red else Color.LightGray
         Button(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp)),
             onClick = onCLick,
+            interactionSource = interaction,
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
         ) {
             Text(
                 text = categoryEntry.strCategory,
-                color = textColor,
+                color = color,
             )
         }
 }
